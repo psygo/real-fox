@@ -4,6 +4,8 @@ import { useState } from "react"
 
 import { Loading } from "@types"
 
+import { postGames } from "@actions"
+
 import { Button } from "@shad"
 
 export function PlayersList() {
@@ -12,9 +14,10 @@ export function PlayersList() {
   return (
     <Button
       disabled={loading === Loading.Loading}
-      onClick={() => {
+      onClick={async () => {
         setLoading(Loading.Loading)
         console.log("here")
+        await postGames()
         setLoading(Loading.Loaded)
       }}
     >

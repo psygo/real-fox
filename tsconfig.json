@@ -34,11 +34,26 @@
       "@/*": [
         "./src/*"
       ],
+      "@actions/*": [
+        "./src/server/actions/*"
+      ],
+      "@actions": [
+        "./src/server/actions/exports"
+      ],
       "@components/*": [
         "./src/components/*"
       ],
       "@components": [
         "./src/components/exports"
+      ],
+      "@db/*": [
+        "./src/server/db/*"
+      ],
+      "@db": [
+        "./src/server/db/exports"
+      ],
+      "@schema": [
+        "./dbschema/edgeql-js/index"
       ],
       "@shad/*": [
         "./src/components/common/shad/*"
