@@ -2,6 +2,8 @@ import { GeistSans } from "geist/font/sans"
 
 import { type WithReactChildren } from "@types"
 
+import { TopNav } from "@components"
+
 import "@styles/globals.css"
 
 export const metadata = {
@@ -14,7 +16,10 @@ export default function RootLayout({
 }: WithReactChildren) {
   return (
     <html lang="en" className={`${GeistSans.variable}`}>
-      <body>{children}</body>
+      <body className="dark min-h-screen antialiased">
+        <TopNav />
+        <main className="p-4">{children}</main>
+      </body>
     </html>
   )
 }
