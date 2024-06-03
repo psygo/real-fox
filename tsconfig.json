@@ -40,6 +40,12 @@
       "@styles": [
         "./src/styles/exports"
       ],
+      "@types/*": [
+        "./src/types/*"
+      ],
+      "@types": [
+        "./src/types/exports"
+      ],
     }
   },
   "include": [
