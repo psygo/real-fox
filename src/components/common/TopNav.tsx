@@ -4,7 +4,7 @@ import { Button } from "@shad"
 
 export function TopNav() {
   return (
-    <nav className="flex w-screen justify-between bg-gray-700 px-3 py-3">
+    <nav className="flex w-screen justify-between bg-gray-900 px-3 py-3">
       <Link href="/">
         <Button variant="secondary" className="px-[12px]">
           <h1 className="text-2xl font-bold tracking-tight">

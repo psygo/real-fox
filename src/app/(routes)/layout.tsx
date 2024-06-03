@@ -2,7 +2,7 @@ import { GeistSans } from "geist/font/sans"
 
 import { type WithReactChildren } from "@types"
 
-import { TopNav } from "@components"
+import { Footer, TopNav } from "@components"
 
 import "@styles/globals.css"
 
@@ -16,9 +16,12 @@ export default function RootLayout({
 }: WithReactChildren) {
   return (
     <html lang="en" className={`${GeistSans.variable}`}>
-      <body className="dark min-h-screen antialiased">
+      <body className="dark flex flex-col gap-6 antialiased">
         <TopNav />
-        <main className="p-4">{children}</main>
+        <main className="min-h-screen px-4">
+          {children}
+        </main>
+        <Footer />
       </body>
     </html>
   )
