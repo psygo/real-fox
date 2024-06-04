@@ -1,4 +1,4 @@
-import e, { type $infer } from "@schema"
+import e from "@schema"
 
 export const playersSelect = e.select(
   e.Player,
@@ -7,7 +7,3 @@ export const playersSelect = e.select(
     order_by: player.rank,
   }),
 )
-
-export type PlayersSelect = $infer<typeof playersSelect>
-
-export type PlayerSelect = PlayersSelect[0]

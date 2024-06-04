@@ -36,6 +36,7 @@ enum RankEval {
   Stay,
 }
 
+// TODO: What if the player gets downgraded and then reappears? It should be reset to 9d...
 function evalStreak(streak: string) {
   const wins = streak.match(/\+/g)?.length ?? 0
   const losses = streak.match(/\-/g)?.length ?? 0
