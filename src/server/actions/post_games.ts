@@ -4,7 +4,9 @@ import e from "@schema"
 
 import { edgeDbClient } from "@db"
 
-export async function postGames() {
+import { type GameSelect } from "../queries/game"
+
+export async function postGames(games: GameSelect) {
   try {
     const query = e.params(
       {
@@ -37,7 +39,6 @@ export async function postGames() {
           }),
         ),
       },
-
       (params) => {
         return e.for(
           e.array_unpack(params.games),
@@ -61,13 +62,15 @@ export async function postGames() {
                   })
                   .unlessConflict((player) => ({
                     on: player.fox_id,
-                    else: player,
+                    else: e.update(player, () => ({
+                      set: {},
+                    })),
                   })),
                 white: e
                   .insert(e.Player, {
                     fox_id: game.white.fox_id,
-                    created_at: game.black.created_at,
-                    updated_at: game.black.updated_at,
+                    created_at: game.white.created_at,
+                    updated_at: game.white.updated_at,
                     nick: game.white.nick,
                     name: game.white.name,
                     country: game.white.country,
@@ -76,7 +79,9 @@ export async function postGames() {
                   })
                   .unlessConflict((player) => ({
                     on: player.fox_id,
-                    else: player,
+                    else: e.update(player, () => ({
+                      set: {},
+                    })),
                   })),
               })
               .unlessConflict((game) => ({
@@ -88,36 +93,13 @@ export async function postGames() {
       },
     )
 
-    const result = await query.run(edgeDbClient, {
-      games: [
-        {
-          game_id: 1717434007010001080n,
-          black: {
-            fox_id: 33167901,
-            nick: "migurudia",
-            name: "migurudia",
-            rank: 3000,
-            country: "JAPAN",
-            ai: false,
-            updated_at: new Date(),
-            created_at: new Date(),
-          },
-          white: {
-            fox_id: 27738848,
-            nick: "财迷恐龙",
-            name: "miserdino",
-            rank: 3000,
-            country: "UNITED_STATES",
-            ai: false,
-            updated_at: new Date(),
-            created_at: new Date(),
-          },
-          start_time: new Date(),
-          end_time: new Date(),
-          winner: "BLACK",
-        },
-      ],
+    const res = await query.run(edgeDbClient, {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      games: games,
     })
+
+    return res
   } catch (e) {
     console.error(e)
   }
