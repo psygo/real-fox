@@ -1,26 +1,22 @@
-"use client"
+import {
+  type PlayerSelect,
+  type PlayersSelect,
+} from "@queries"
 
-import { useState } from "react"
+type PlayersListProps = {
+  players: PlayersSelect
+}
 
-import { Loading } from "@types"
+export function PlayersList({ players }: PlayersListProps) {
+  return players.map((p) => (
+    <PlayerCard key={p.fox_id} player={p} />
+  ))
+}
 
-import { Button } from "@shad"
+type PlayerCardProps = {
+  player: PlayerSelect
+}
 
-export function PlayersList() {
-  const [loading, setLoading] = useState(Loading.NotYet)
-
-  return (
-    <Button
-      disabled={loading === Loading.Loading}
-      onClick={async () => {
-        setLoading(Loading.Loading)
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        // await postGames(transformedGames)
-        setLoading(Loading.Loaded)
-      }}
-    >
-      Register Games
-    </Button>
-  )
+export function PlayerCard({ player }: PlayerCardProps) {
+  return <div>{player.name}</div>
 }

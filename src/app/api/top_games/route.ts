@@ -10,20 +10,19 @@ headers.append(
   `Basic ${process.env.NEXT_FOX_API_AUTH}`,
 )
 
+const API =
+  "https://foxwq-8e6797d8dbb9.herokuapp.com/api/v1"
+
 async function fetchPlayerInfo(id: number | bigint) {
-  const res = await fetch(
-    `https://foxwq-8e6797d8dbb9.herokuapp.com/api/v1/players/${id}`,
-    { headers },
-  )
+  const res = await fetch(`${API}/players/${id}`, {
+    headers,
+  })
 
   return (await res.json()) as Fox_PlayerInfo
 }
 
 async function fetchTopGames() {
-  const res = await fetch(
-    "https://foxwq-8e6797d8dbb9.herokuapp.com/api/v1/top_games",
-    { headers },
-  )
+  const res = await fetch(`${API}/top_games`, { headers })
 
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   return (await res.json()) as Fox_Game[]

@@ -34,12 +34,6 @@
       "@/*": [
         "./src/*"
       ],
-      "@actions/*": [
-        "./src/server/actions/*"
-      ],
-      "@actions": [
-        "./src/server/actions/exports"
-      ],
       "@components/*": [
         "./src/components/*"
       ],
@@ -51,6 +45,12 @@
       ],
       "@db": [
         "./src/server/db/exports"
+      ],
+      "@queries/*": [
+        "./src/server/queries/*"
+      ],
+      "@queries": [
+        "./src/server/queries/exports"
       ],
       "@schema": [
         "./dbschema/edgeql-js/index"
