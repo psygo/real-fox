@@ -1,4 +1,6 @@
-export const exampleTopGamesList = [
+import { type Fox_Game } from "@types"
+
+export const exampleTopGamesList: Fox_Game[] = [
   {
     id: 1717434007010001080n,
     info: "",

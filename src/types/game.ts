@@ -1,5 +1,5 @@
 export type Fox_GamePlayer = {
-  id: number
+  id: number | bigint
   nick: string
   name: string
   rank: string
@@ -8,7 +8,7 @@ export type Fox_GamePlayer = {
 }
 
 export type Fox_Game = {
-  id: number
+  id: number | bigint
   info: string
   black: Fox_GamePlayer
   white: Fox_GamePlayer

@@ -6,8 +6,6 @@ import { Loading } from "@types"
 
 import { Button } from "@shad"
 
-import { exampleTopGamesList } from "./example_top_games_list"
-
 export function PlayersList() {
   const [loading, setLoading] = useState(Loading.NotYet)
 

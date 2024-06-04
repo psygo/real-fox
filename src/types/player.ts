@@ -1,5 +1,5 @@
 export type Fox_PlayerInfo = {
-  id: number
+  id: number | bigint
   nick: string
   name: string
   rank: string

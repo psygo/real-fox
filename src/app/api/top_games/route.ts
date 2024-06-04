@@ -10,7 +10,7 @@ headers.append(
   `Basic ${process.env.NEXT_FOX_API_AUTH}`,
 )
 
-async function fetchPlayerInfo(id: number) {
+async function fetchPlayerInfo(id: number | bigint) {
   const res = await fetch(
     `https://foxwq-8e6797d8dbb9.herokuapp.com/api/v1/players/${id}`,
     { headers },
