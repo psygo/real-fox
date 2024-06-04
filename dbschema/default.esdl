@@ -4,20 +4,25 @@ module default {
       constraint exclusive;
     }
     
-    required created_at: datetime {
+    created_at: datetime {
       default := (select datetime_current());
     }
-    required updated_at: datetime {
+    updated_at: datetime {
       default := (select datetime_current());
     }
 
+    required registered_time: str;
     required nick: str;
     required name: str;
     required country: str;
+    required gender: str;
+    required flair: str;
+    
+    required wins: number;
+    required losses: number;
+    required current_streak: str;
 
-    required rank: int16 {
-      default := 2900;
-    }
+    required rank: int16; 
     required ai: bool;
   }
 }
