@@ -21,25 +21,25 @@ module default {
     multi games: Game;
   }
   
-  type Game {
-    required game_id: bigint {
-      constraint exclusive;
-    }
+  # type Game {
+  #   required game_id: bigint {
+  #     constraint exclusive;
+  #   }
 
-    required created_at: datetime {
-      default := (select datetime_current());
-    }
-    required updated_at: datetime {
-      default := (select datetime_current());
-    }
+  #   required created_at: datetime {
+  #     default := (select datetime_current());
+  #   }
+  #   required updated_at: datetime {
+  #     default := (select datetime_current());
+  #   }
 
-    required start_time: datetime;
-    required end_time: datetime;
+  #   required start_time: datetime;
+  #   required end_time: datetime;
 
-    required black: Player;
-    required white: Player;
-    required winner: Color;
-  }
+  #   required black: Player;
+  #   required white: Player;
+  #   required winner: Color;
+  # }
 
-  scalar type Color extending enum<BLACK, WHITE>;
+  # scalar type Color extending enum<BLACK, WHITE>;
 }

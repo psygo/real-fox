@@ -1,6 +1,6 @@
 import { PlayersList } from "@components"
 
-export default function HomePage() {
+export default async function HomePage() {
   return (
     <>
       <PlayersList />

@@ -1,37 +1,66 @@
 import "server-only"
 
-import { type NextRequest } from "next/server"
+import { type Fox_Game, type Fox_PlayerInfo } from "@types"
 
-async function getTopPlayers() {
-  const foxUser = process.env.NEXT_FOX_API_USER!
-  const foxPassword =
-    process.env.NEXT_FOX_API_PASSWORD_HASH!
+const headers = new Headers()
+headers.append("X-APP-ID", process.env.NEXT_FOX_API_ID!)
+headers.append("X-API-KEY", process.env.NEXT_FOX_API_KEY!)
+headers.append(
+  "Authorization",
+  `Basic ${process.env.NEXT_FOX_API_AUTH}`,
+)
 
-  const headers = new Headers()
-  headers.append(
-    "Authorization",
-    `Basic ${btoa(foxUser + ":" + foxPassword)}`,
-  )
-
+async function fetchPlayerInfo(id: number) {
   const res = await fetch(
-    "https://foxwq-8e6797d8dbb9.herokuapp.com/api/v1/top_games",
-    {
-      headers,
-      mode: "no-cors",
-    },
+    `https://foxwq-8e6797d8dbb9.herokuapp.com/api/v1/players/${id}`,
+    { headers },
   )
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const topPlayersData = await res.json()
 
-  console.log("data", topPlayersData)
-
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-  return topPlayersData
+  return (await res.json()) as Fox_PlayerInfo
 }
 
-export async function POST(_: NextRequest) {
+async function fetchTopGames() {
+  const res = await fetch(
+    "https://foxwq-8e6797d8dbb9.herokuapp.com/api/v1/top_games",
+    { headers },
+  )
+
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+  return (await res.json()) as Fox_Game[]
+}
+
+enum RankEval {
+  Up1,
+  Up2,
+  Down1,
+  Down2,
+  Stay,
+}
+
+function evalStreak(streak: string) {
+  const wins = streak.match(/\+/g)?.length ?? 0
+  const losses = streak.match(/\-/g)?.length ?? 0
+
+  if (wins >= 18) return RankEval.Up2
+  else if (wins >= 14) return RankEval.Up1
+  else if (losses <= 18) return RankEval.Down2
+  else if (losses <= 14) return RankEval.Down1
+  else return RankEval.Stay
+}
+
+export async function POST() {
   try {
-    await getTopPlayers()
+    const topGames = await fetchTopGames()
+
+    const blackPlayersIds = topGames.map((g) => g.black.id)
+    const whitePlayersIds = topGames.map((g) => g.white.id)
+    const playersIds = new Set(
+      blackPlayersIds.concat(whitePlayersIds),
+    )
+
+    const playersInfos = await Promise.all(
+      [...playersIds].map((id) => fetchPlayerInfo(id)),
+    )
   } catch (e) {
     console.error(e)
   }
