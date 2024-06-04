@@ -16,7 +16,7 @@ export function PlayerCard({ player }: PlayerCardProps) {
           <PlayerName name={player.name} />
           <PlayerRank rank={player.rank} />
           <PlayerCountry country={player.country} />
-          {/* <PlayerSex gender={player.gender} /> */}
+          {/* <PlayerGender gender={player.gender} /> */}
           {/* <PlayerFlair flair={player.flair} /> */}
         </div>
       </div>
@@ -88,7 +88,7 @@ type PlayerGenderProps = {
   gender: string
 }
 
-function PlayerSex({ gender }: PlayerGenderProps) {
+function PlayerGender({ gender }: PlayerGenderProps) {
   return <p>{gender}</p>
 }
 
