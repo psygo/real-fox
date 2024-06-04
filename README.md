@@ -2,6 +2,8 @@
 
 Ranking Fox Weiqi players beyond 9d.
 
+> Huge thanks to @ale64bit for his work on the [openfoxwq](https://github.com/openfoxwq) project, otherwise this wouldn't have been possible.
+
 ## Services and Tech Used
 
 - [Vercel](https://vercel.com) for handling deployment.
