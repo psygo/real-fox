@@ -6,8 +6,9 @@ Ranking Fox Weiqi players beyond 9d.
 
 ## Services and Tech Used
 
-- [Vercel](https://vercel.com) for handling deployment.
+- [Vercel](https://vercel.com) for handling deployment, and cron jobs.
 - [EdgeDB](https://www.edgedb.com/)
+- [Open Fox API](https://github.com/openfoxwq/api)
 
 ## Dev
 
@@ -21,6 +22,16 @@ This is the shape of the project's environment variables:
 
 EDGEDB_INSTANCE=
 EDGEDB_SECRET_KEY=
+
+#-----------------------------------------------------------
+# 2. Open Fox API
+
+NEXT_FOX_API_USER=
+NEXT_FOX_API_PASSWORD_HASH=
+NEXT_FOX_API_AUTH=
+
+NEXT_FOX_API_ID=
+NEXT_FOX_API_KEY=
 
 #-----------------------------------------------------------
 ```
