@@ -1,3 +1,5 @@
+import Image from "next/image"
+
 import { type PlayerSelect } from "@types"
 
 type PlayerCardProps = {
@@ -7,14 +9,36 @@ type PlayerCardProps = {
 export function PlayerCard({ player }: PlayerCardProps) {
   return (
     <div className="rounded-md border-2 border-gray-700 bg-gray-900 p-4 text-gray-100 hover:bg-gray-800">
-      <div className="flex flex-wrap items-baseline gap-2">
-        <PlayerName name={player.name} />
-        <PlayerRank rank={player.rank} />
-        <PlayerCountry country={player.country} />
-        {/* <PlayerSex gender={player.gender} /> */}
-        {/* <PlayerFlair flair={player.flair} /> */}
+      <div className="flex gap-4">
+        <PlayerAvatar />
+
+        <div className="flex flex-wrap items-baseline gap-2">
+          <PlayerName name={player.name} />
+          <PlayerRank rank={player.rank} />
+          <PlayerCountry country={player.country} />
+          {/* <PlayerSex gender={player.gender} /> */}
+          {/* <PlayerFlair flair={player.flair} /> */}
+        </div>
       </div>
     </div>
+  )
+}
+
+type PlayerAvatarProps = {
+  url?: string
+}
+
+function PlayerAvatar({
+  url = "/fox_avatars/avatar_01.png",
+}: PlayerAvatarProps) {
+  return (
+    <Image
+      className="rounded-md"
+      src={url}
+      alt="Avatar"
+      width={60}
+      height={60}
+    />
   )
 }
 
