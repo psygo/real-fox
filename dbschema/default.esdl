@@ -13,6 +13,7 @@ module default {
     }
 
     # Fox Metadata
+    # real_name: str;
     # required registered_time: str;
     required nick: str;
     index on (.nick);

@@ -31,15 +31,20 @@ export async function POST() {
     const pageSize = maxPageSize
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
     const topGamesIntervalId = setInterval(async () => {
-      const { games, nextLastGameId } = await fetchTopGames(
-        lastGameId,
-        pageSize,
-      )
+      const res = await fetchTopGames(lastGameId, pageSize)
 
-      if (games.length < pageSize) {
+      if (!res) {
+        clearInterval(topGamesIntervalId)
+        return
+      }
+
+      const { games, nextLastGameId } = res
+
+      if (games.length === 0 || allGames.length >= 7_000) {
         // 3. Update Ranks based on Each Game
         await updatePlayersRanks(allGames)
         clearInterval(topGamesIntervalId)
+        return
       }
 
       lastGameId = nextLastGameId

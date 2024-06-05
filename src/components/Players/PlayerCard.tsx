@@ -17,6 +17,7 @@ export function PlayerCard({ player }: PlayerCardProps) {
             <PlayerName name={player.name} />
             <PlayerRank rank={player.rank} />
             <PlayerCountry country={player.country} />
+            <PlayerIsAI isAi={player.ai} />
           </div>
 
           <PlayerCurrentStreak
@@ -27,6 +28,14 @@ export function PlayerCard({ player }: PlayerCardProps) {
       </div>
     </div>
   )
+}
+
+type PlayerIsAIProps = {
+  isAi: boolean
+}
+
+function PlayerIsAI({ isAi }: PlayerIsAIProps) {
+  return isAi ? <p className="text-gray-400">AI</p> : null
 }
 
 type PlayerAvatarProps = {

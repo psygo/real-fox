@@ -20,23 +20,30 @@ export async function fetchTopGames(
   lastGameId: number | bigint = 0,
   pageSize = maxPageSize,
 ) {
-  topGamesSearchParams.set("page_size", pageSize.toString())
-  if (lastGameId !== 0)
+  try {
     topGamesSearchParams.set(
-      "last_game_id",
-      lastGameId.toString(),
+      "page_size",
+      pageSize.toString(),
+    )
+    if (lastGameId !== 0)
+      topGamesSearchParams.set(
+        "last_game_id",
+        lastGameId.toString(),
+      )
+
+    const res = await fetch(
+      `${API}/top_games?${topGamesSearchParams.toString()}`,
+      { headers },
     )
 
-  const res = await fetch(
-    `${API}/top_games?${topGamesSearchParams.toString()}`,
-    { headers },
-  )
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    const json = await res.json()
 
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const json = await res.json()
+    const games = json as Fox_Game[]
+    const nextLastGameId = games.last().id
 
-  const games = json as Fox_Game[]
-  const nextLastGameId = games.last().id
-
-  return { games, nextLastGameId }
+    return { games, nextLastGameId }
+  } catch (e) {
+    console.error(e)
+  }
 }
