@@ -9,7 +9,11 @@ export type PlayerSelect = PlayersSelect[0]
 
 export type PlayerUpsert = {
   fox_id: number
+  nick: string
+  name: string
   rank: number
+  ai: boolean
+  country: string
   windowed_wins: number
   windowed_losses: number
 }

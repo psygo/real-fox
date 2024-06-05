@@ -14,7 +14,7 @@ import {
   playersUpsert,
 } from "@queries"
 
-export function evalStreak(
+function evalStreak(
   wins: number,
   losses: number,
   rank: number,
@@ -123,12 +123,20 @@ export async function updatePlayersRanks(
     // 4.4. Format the new data
     const newBlack: PlayerUpsert = {
       fox_id: black.id,
+      nick: black.nick,
+      name: black.name,
+      ai: black.ai,
+      country: black.country,
       rank: blackRank,
       windowed_wins: blackWins,
       windowed_losses: blackLosses,
     }
     const newWhite: PlayerUpsert = {
       fox_id: white.id,
+      nick: white.nick,
+      name: white.name,
+      ai: black.ai,
+      country: black.country,
       rank: whiteRank,
       windowed_wins: whiteWins,
       windowed_losses: whiteLosses,
@@ -142,4 +150,6 @@ export async function updatePlayersRanks(
   await playersUpsert.run(edgeDbClient, {
     players: Object.values(updatedPlayers),
   })
+
+  return updatedPlayers
 }

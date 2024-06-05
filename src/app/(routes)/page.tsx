@@ -4,19 +4,15 @@ import { playersSelect } from "@queries"
 
 import { PlayersList } from "@components"
 
-// import { exampleTopGamesList } from "../api/top_games/example_top_games_list"
-// import { updatePlayersRanks } from "../api/top_games/route"
+import { exampleTopGamesList } from "../api/top_games/example_top_games_list"
+import { updatePlayersRanks } from "../api/top_games/update_players_ranks"
 
 export default async function HomePage() {
-  // const updatedPlayers = await updatePlayersRanks(
-  //   exampleTopGamesList,
-  // )
+  const updatedPlayers = await updatePlayersRanks(
+    exampleTopGamesList,
+  )
 
   // console.log("updated players", updatedPlayers)
-
-  // await playersUpsert.run(edgeDbClient, {
-  //   players: Object.values(updatedPlayers),
-  // })
 
   const players = await playersSelect.run(edgeDbClient)
 

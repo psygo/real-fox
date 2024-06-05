@@ -1,4 +1,4 @@
-CREATE MIGRATION m14t32lzngbuop2o42ern66aqg3twila67xcxn2z7n4yh3hfnarzwq
+CREATE MIGRATION m1hvry7liauttrmuvjp3ic5jndc33e2x5irn4crubydlr6vghedq2q
     ONTO initial
 {
   CREATE TYPE default::Player {
@@ -9,25 +9,18 @@ CREATE MIGRATION m14t32lzngbuop2o42ern66aqg3twila67xcxn2z7n4yh3hfnarzwq
               std::datetime_current()
           );
       };
-      CREATE REQUIRED PROPERTY current_streak: std::str;
-      CREATE REQUIRED PROPERTY flair: std::str;
-      CREATE REQUIRED PROPERTY fox_id: std::bigint {
+      CREATE REQUIRED PROPERTY fox_id: std::int64 {
           CREATE CONSTRAINT std::exclusive;
       };
-      CREATE REQUIRED PROPERTY gender: std::str;
-      CREATE REQUIRED PROPERTY losses: std::int16;
       CREATE REQUIRED PROPERTY name: std::str;
       CREATE REQUIRED PROPERTY nick: std::str;
       CREATE REQUIRED PROPERTY rank: std::int16;
-      CREATE REQUIRED PROPERTY registered_time: std::str;
       CREATE PROPERTY updated_at: std::datetime {
           SET default := (SELECT
               std::datetime_current()
           );
       };
-      CREATE REQUIRED PROPERTY window_length: std::int16;
       CREATE REQUIRED PROPERTY windowed_losses: std::int16;
       CREATE REQUIRED PROPERTY windowed_wins: std::int16;
-      CREATE REQUIRED PROPERTY wins: std::int16;
   };
 };
