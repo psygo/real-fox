@@ -1,5 +1,7 @@
 import e from "@schema"
 
+export const deleteQuery = e.delete(e.Player)
+
 export const playersUpsert = e.params(
   {
     players: e.array(

@@ -12,12 +12,17 @@ export function PlayerCard({ player }: PlayerCardProps) {
       <div className="flex gap-4">
         <PlayerAvatar />
 
-        <div className="flex flex-wrap items-baseline gap-2">
-          <PlayerName name={player.name} />
-          <PlayerRank rank={player.rank} />
-          <PlayerCountry country={player.country} />
-          {/* <PlayerGender gender={player.gender} /> */}
-          {/* <PlayerFlair flair={player.flair} /> */}
+        <div className="flex flex-col gap-2">
+          <div className="flex flex-wrap items-baseline gap-2">
+            <PlayerName name={player.name} />
+            <PlayerRank rank={player.rank} />
+            <PlayerCountry country={player.country} />
+          </div>
+
+          <PlayerCurrentStreak
+            wins={player.windowed_wins}
+            losses={player.windowed_losses}
+          />
         </div>
       </div>
     </div>
@@ -55,7 +60,7 @@ type PlayerRankProps = {
 }
 
 function PlayerRank({ rank }: PlayerRankProps) {
-  const danRank = ((rank - 2100) / 100).toFixed(0) + "d"
+  const danRank = ((rank - 2000) / 100).toFixed(0) + "d"
 
   return (
     <h4 className="text-lg font-semibold text-gray-400">
@@ -73,6 +78,7 @@ const flags: Record<string, string> = {
   JAPAN: "🇯🇵",
   SOUTH_KOREA: "🇰🇷",
   TAIWAN: "🇹🇼",
+  THAILAND: "🇹🇭",
   UNITED_STATES: "🇺🇸",
   UNSPECIFIED: "🌐",
   UNKNOWN: "❔",
@@ -84,18 +90,22 @@ function PlayerCountry({ country }: PlayerCountryProps) {
   return <h4 className="text-xl text-gray-400">{flag}</h4>
 }
 
-type PlayerGenderProps = {
-  gender: string
+type PlayerCurrentStreakProps = {
+  wins: number
+  losses: number
 }
 
-function PlayerGender({ gender }: PlayerGenderProps) {
-  return <p>{gender}</p>
-}
-
-type PlayerFlairProps = {
-  flair: string
-}
-
-function PlayerFlair({ flair }: PlayerFlairProps) {
-  return <p>{flair}</p>
+function PlayerCurrentStreak({
+  wins,
+  losses,
+}: PlayerCurrentStreakProps) {
+  return (
+    <div>
+      <p className="font-semibold">
+        <span className="text-green-400">{wins} W</span>{" "}
+        <span className="text-gray-500">:</span>{" "}
+        <span className="text-red-400">{losses} L</span>
+      </p>
+    </div>
+  )
 }

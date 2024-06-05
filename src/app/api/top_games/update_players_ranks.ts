@@ -80,16 +80,27 @@ export async function updatePlayersRanks(
 
     // 4.1. Either from DB or what we've already updated
     const blackFromDb =
-      updatedPlayers[black.id] ?? playersFromDb[black.id]
+      updatedPlayers[black.id] ??
+      playersFromDbHashTable[black.id]
     const whiteFromDb =
-      updatedPlayers[white.id] ?? playersFromDb[white.id]
+      updatedPlayers[white.id] ??
+      playersFromDbHashTable[white.id]
+
+    // 4.2. If the difference between the players' ranks is
+    //      bigger than 2, we don't count it for ranking.
+    //      Otherwise, players will be able to rank up
+    //      indefinitely.
+    let blackRank = blackFromDb?.rank ?? 2900
+    let whiteRank = whiteFromDb?.rank ?? 2900
+    const rankDiff = Math.abs(blackRank - whiteRank)
+    if (rankDiff >= 200) continue
 
     let blackWins = blackFromDb?.windowed_wins ?? 0
     let blackLosses = blackFromDb?.windowed_losses ?? 0
     let whiteWins = whiteFromDb?.windowed_wins ?? 0
     let whiteLosses = whiteFromDb?.windowed_losses ?? 0
 
-    // 4.2. Update wins and losses from this game
+    // 4.3. Update wins and losses from this game
     if (g.result.winner === "BLACK") {
       blackWins++
       whiteLosses++
@@ -98,8 +109,7 @@ export async function updatePlayersRanks(
       whiteWins++
     }
 
-    // 4.3. Re-evaluate the rankings
-    let blackRank = blackFromDb?.rank ?? 2900
+    // 4.4. Re-evaluate the rankings
     if (blackWins + blackLosses === 20) {
       blackRank = evalStreak(
         blackWins,
@@ -109,7 +119,6 @@ export async function updatePlayersRanks(
       blackWins = 0
       blackLosses = 0
     }
-    let whiteRank = whiteFromDb?.rank ?? 2900
     if (whiteWins + whiteLosses === 20) {
       whiteRank = evalStreak(
         whiteWins,
@@ -120,7 +129,7 @@ export async function updatePlayersRanks(
       whiteLosses = 0
     }
 
-    // 4.4. Format the new data
+    // 4.5. Format the new data
     const newBlack: PlayerUpsert = {
       fox_id: black.id,
       nick: black.nick,
@@ -135,8 +144,8 @@ export async function updatePlayersRanks(
       fox_id: white.id,
       nick: white.nick,
       name: white.name,
-      ai: black.ai,
-      country: black.country,
+      ai: white.ai,
+      country: white.country,
       rank: whiteRank,
       windowed_wins: whiteWins,
       windowed_losses: whiteLosses,

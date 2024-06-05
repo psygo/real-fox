@@ -13,5 +13,6 @@ const API =
 
 export async function fetchTopGames() {
   const res = await fetch(`${API}/top_games`, { headers })
+  console.log("res status", res.status)
   return (await res.json()) as Fox_Game[]
 }
