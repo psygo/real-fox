@@ -65,7 +65,7 @@ export async function updatePlayersRanks(
     playersFromDbHashTable[p.fox_id] = p
   }
 
-  // 3. Order Top Games by date
+  // 3. Order Top Games by Date
   const orderedTopGames = _.orderBy(
     topGames,
     ["start_time"],
@@ -90,8 +90,14 @@ export async function updatePlayersRanks(
     //      bigger than 2, we don't count it for ranking.
     //      Otherwise, players will be able to rank up
     //      indefinitely.
-    let blackRank = blackFromDb?.rank ?? 2900
-    let whiteRank = whiteFromDb?.rank ?? 2900
+    let blackRank = Math.max(
+      blackFromDb?.rank ?? 2900,
+      2900,
+    )
+    let whiteRank = Math.max(
+      whiteFromDb?.rank ?? 2900,
+      2900,
+    )
     const rankDiff = Math.abs(blackRank - whiteRank)
     if (rankDiff >= 200) continue
 

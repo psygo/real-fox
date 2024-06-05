@@ -1,7 +1,5 @@
 import e from "@schema"
 
-export const deleteQuery = e.delete(e.Player)
-
 export const playersUpsert = e.params(
   {
     players: e.array(
@@ -28,8 +26,8 @@ export const playersUpsert = e.params(
             name: playerRoot.name,
             ai: playerRoot.ai,
             country: playerRoot.country,
-            rank: Math.random(),
-            windowed_wins: Math.random(),
+            rank: playerRoot.rank,
+            windowed_wins: playerRoot.windowed_wins,
             windowed_losses: playerRoot.windowed_losses,
           })
           .unlessConflict((player) => ({
