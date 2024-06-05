@@ -1,3 +1,5 @@
+import "@utils/array"
+
 import { type Fox_Game } from "@types"
 
 export const API =
@@ -41,7 +43,7 @@ export async function fetchTopGames() {
 
     if (json) {
       allGames = allGames.concat(json as Fox_Game[])
-      lastGameId = allGames.at(-1)!.id
+      lastGameId = allGames.last().id
       console.log("all games length", allGames.length)
       // testCounter++
     } else break

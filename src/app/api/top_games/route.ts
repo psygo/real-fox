@@ -2,6 +2,8 @@ import "server-only"
 
 import { NextResponse } from "next/server"
 
+import "@utils/array"
+
 import { edgeDbClient } from "@db"
 
 import { deleteQuery } from "@queries"
@@ -20,8 +22,8 @@ export async function POST() {
     const topGames = await fetchTopGames()
     console.log(
       "top games length",
-      topGames[0],
-      topGames.at(-1),
+      topGames.first(),
+      topGames.last(),
     )
 
     // await deleteQuery.run(edgeDbClient)
