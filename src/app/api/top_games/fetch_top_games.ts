@@ -13,43 +13,30 @@ headers.append(
   `Basic ${process.env.NEXT_FOX_API_AUTH}`,
 )
 
-const pageSize = 100
+export const maxPageSize = 500
 const topGamesSearchParams = new URLSearchParams()
-topGamesSearchParams.set("page_size", pageSize.toString())
 
-export async function fetchTopGames() {
-  let lastGameId: number | bigint = 0
-  let allGames: Fox_Game[] = []
-
-  // let testCounter = 0
-
-  while (true) {
-    if (lastGameId)
-      topGamesSearchParams.set(
-        "last_game_id",
-        lastGameId.toString(),
-      )
-
-    const addr = `${API}/top_games?${topGamesSearchParams.toString()}`
-    console.log("addr", addr)
-
-    const res = await fetch(
-      `${API}/top_games?${topGamesSearchParams.toString()}`,
-      { headers },
+export async function fetchTopGames(
+  lastGameId: number | bigint = 0,
+  pageSize = maxPageSize,
+) {
+  topGamesSearchParams.set("page_size", pageSize.toString())
+  if (lastGameId !== 0)
+    topGamesSearchParams.set(
+      "last_game_id",
+      lastGameId.toString(),
     )
 
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    const json = await res.json()
+  const res = await fetch(
+    `${API}/top_games?${topGamesSearchParams.toString()}`,
+    { headers },
+  )
 
-    if (json) {
-      allGames = allGames.concat(json as Fox_Game[])
-      lastGameId = allGames.last().id
-      console.log("all games length", allGames.length)
-      // testCounter++
-    } else break
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+  const json = await res.json()
 
-    // if (testCounter > 1) break
-  }
+  const games = json as Fox_Game[]
+  const nextLastGameId = games.last().id
 
-  return allGames
+  return { games, nextLastGameId }
 }
