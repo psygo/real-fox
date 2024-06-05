@@ -7,6 +7,13 @@ export type PlayersSelect = $infer<typeof playersSelect>
 
 export type PlayerSelect = PlayersSelect[0]
 
+export type PlayerUpsert = {
+  fox_id: number
+  rank: number
+  windowed_wins: number
+  windowed_losses: number
+}
+
 export type Fox_PlayerInfo = {
   id: number | bigint
   nick: string
