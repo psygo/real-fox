@@ -1,5 +1,5 @@
 export type Fox_GamePlayer = {
-  id: number | bigint
+  id: number
   nick: string
   name: string
   rank: string
