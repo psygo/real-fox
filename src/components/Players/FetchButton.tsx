@@ -2,14 +2,24 @@
 
 import { Button } from "@shad"
 
-export function FetchButton() {
+type FetchButtonProps = {
+  apiPath?: string
+  method?: string
+  text: string
+}
+
+export function FetchButton({
+  apiPath = "/me",
+  method = "GET",
+  text,
+}: FetchButtonProps) {
   return (
     <Button
       onClick={async () => {
-        await fetch("/api/top_games", { method: "POST" })
+        await fetch(`/api${apiPath}`, { method })
       }}
     >
-      Fetch and Update DB
+      {text}
     </Button>
   )
 }

@@ -1,6 +1,6 @@
 import { db, players } from "@db"
 
-export async function deleteAllUsers() {
+export async function deleteAllPlayers() {
   try {
     await db.delete(players)
   } catch (e) {

@@ -30,9 +30,10 @@ export default function About() {
           than 9d, which is what this website is about. In
           fact,{" "}
           <a href="https://home.yikeweiqi.com/">Yike</a> has
-          already been doing this, although it is a much
-          less popular server than{" "}
-          <a href="https://www.foxwq.com/">Fox Weiqi</a>.
+          already been doing this, although it is a less
+          popular server than{" "}
+          <a href="https://www.foxwq.com/">Fox Weiqi</a> (at
+          least for playing).
         </p>
         <p>
           Currently,{" "}
