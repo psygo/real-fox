@@ -9,7 +9,13 @@ import { fetchMe } from "../top-games/fetch_me"
  */
 export async function GET(req: NextRequest) {
   try {
-    if (!cronAuth(req))
+    if (
+      !(
+        process.env.NODE_ENV === "development" ||
+        req.headers.get("Authorization") ===
+          `Bearer ${process.env.CRON_SECRET}`
+      )
+    )
       return NextResponse.json({}, { status: 401 })
 
     const me = await fetchMe()

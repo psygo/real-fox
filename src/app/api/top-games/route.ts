@@ -31,7 +31,13 @@ function logGames(
 
 export async function POST(req: NextRequest) {
   try {
-    if (!cronAuth(req))
+    if (
+      !(
+        process.env.NODE_ENV === "development" ||
+        req.headers.get("Authorization") ===
+          `Bearer ${process.env.CRON_SECRET}`
+      )
+    )
       return NextResponse.json({}, { status: 401 })
 
     // 1. Get All the Top Games
