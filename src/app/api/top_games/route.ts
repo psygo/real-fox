@@ -6,10 +6,6 @@ import "@utils/array"
 
 import { type Fox_Game } from "@types"
 
-import { edgeDbClient } from "@db"
-
-import { deleteQuery } from "@queries"
-
 import { exampleTopGamesList } from "./example_top_games_list"
 import { fetchMe } from "./fetch_me"
 import {
@@ -22,8 +18,6 @@ export async function POST() {
   try {
     // 1. Trigger a login on the API
     await fetchMe()
-
-    // await deleteQuery.run(edgeDbClient)
 
     // 2. Get the Top Games
     let allGames: Fox_Game[] = []

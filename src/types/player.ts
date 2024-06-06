@@ -1,8 +1,3 @@
-import { type $infer } from "@schema"
-
-// eslint-disable-next-line @typescript-eslint/consistent-type-imports
-import { playersSelect } from "@queries"
-
 import {
   type InferInsertModel,
   type InferSelectModel,
@@ -10,20 +5,8 @@ import {
 // eslint-disable-next-line @typescript-eslint/consistent-type-imports
 import { players } from "@db"
 
-export type PlayersSelect = $infer<typeof playersSelect>
-
-export type PlayerSelect = PlayersSelect[0]
-
-export type PlayerUpsert = {
-  fox_id: number
-  nick: string
-  name: string
-  rank: number
-  ai: boolean
-  country: string
-  windowed_wins: number
-  windowed_losses: number
-}
+export type SelectPlayer = InferSelectModel<typeof players>
+export type InsertPlayer = InferInsertModel<typeof players>
 
 export type Fox_PlayerInfo = {
   id: number | bigint
@@ -47,6 +30,3 @@ export type Fox_PlayerInfo = {
     accepting_games: boolean
   }
 }
-
-export type SelectPlayer = InferSelectModel<typeof players>
-export type InsertPlayer = InferInsertModel<typeof players>

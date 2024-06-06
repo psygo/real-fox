@@ -1,8 +1,4 @@
-import e from "@schema"
-
 import { db, players } from "@db"
-
-export const deleteQuery = e.delete(e.Player)
 
 export async function deleteAllUsers() {
   try {

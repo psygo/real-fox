@@ -3,20 +3,11 @@ import _ from "lodash"
 import {
   type Fox_GamePlayer,
   type Fox_Game,
-  // type PlayerSelect,
-  // type PlayerUpsert,
   type SelectPlayer,
   type InsertPlayer,
 } from "@types"
 
-// import { edgeDbClient } from "@db"
-
-import {
-  getPlayersFromIds,
-  // playersSelectFromIds,
-  // playersUpsert,
-  upsertPlayers,
-} from "@queries"
+import { getPlayersFromIds, upsertPlayers } from "@queries"
 
 function evalStreak(
   wins: number,
@@ -56,10 +47,6 @@ export async function updatePlayersRanks(
   )
 
   // 2. Fetch the players from DB
-  // const playersFromDb = await playersSelectFromIds.run(
-  //   edgeDbClient,
-  //   { ids: [...playersIds] },
-  // )
   const playersFromDb =
     (await getPlayersFromIds([...playersIds])) ?? []
   // 2.1. Convert it to a hash table
@@ -168,9 +155,6 @@ export async function updatePlayersRanks(
   }
 
   // 5. Upsert to DB
-  // await playersUpsert.run(edgeDbClient, {
-  //   players: Object.values(updatedPlayers),
-  // })
   await upsertPlayers(Object.values(updatedPlayers))
 
   return updatedPlayers

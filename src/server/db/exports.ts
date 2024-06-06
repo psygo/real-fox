@@ -1,3 +1,2 @@
-export * from "./edgedb_utils"
-export * from "./index"
+export * from "./drizzle_setup"
 export * from "./schema"

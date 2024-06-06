@@ -1,6 +1,4 @@
-import { edgeDbClient } from "@db"
-
-import { playersSelect } from "@queries"
+import { getPlayers } from "@queries"
 
 import { PlayersList } from "@components"
 import { FetchButton } from "../../components/Players/FetchButton"
@@ -15,7 +13,7 @@ export default async function HomePage() {
 
   // console.log("updated players", updatedPlayers)
 
-  const players = await playersSelect.run(edgeDbClient)
+  const players = await getPlayers()
 
   return (
     <div className="flex flex-col items-center gap-2">

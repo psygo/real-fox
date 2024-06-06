@@ -9,7 +9,6 @@ import {
   timestamp,
   varchar,
 } from "drizzle-orm/pg-core"
-import { bigint } from "drizzle-orm/mysql-core"
 
 export const createTable = pgTableCreator(
   (name) => `real_fox_${name}`,
