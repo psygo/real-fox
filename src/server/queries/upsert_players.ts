@@ -1,9 +1,10 @@
+import { sql } from "drizzle-orm"
+
 import e from "@schema"
 
 import { type InsertPlayer } from "@types"
 
 import { db, players } from "@db"
-import { sql } from "drizzle-orm"
 
 export const playersUpsert = e.params(
   {

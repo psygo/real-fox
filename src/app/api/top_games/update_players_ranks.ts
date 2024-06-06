@@ -3,15 +3,19 @@ import _ from "lodash"
 import {
   type Fox_GamePlayer,
   type Fox_Game,
-  type PlayerSelect,
-  type PlayerUpsert,
+  // type PlayerSelect,
+  // type PlayerUpsert,
+  type SelectPlayer,
+  type InsertPlayer,
 } from "@types"
 
-import { edgeDbClient } from "@db"
+// import { edgeDbClient } from "@db"
 
 import {
-  playersSelectFromIds,
-  playersUpsert,
+  getPlayersFromIds,
+  // playersSelectFromIds,
+  // playersUpsert,
+  upsertPlayers,
 } from "@queries"
 
 function evalStreak(
@@ -52,14 +56,16 @@ export async function updatePlayersRanks(
   )
 
   // 2. Fetch the players from DB
-  const playersFromDb = await playersSelectFromIds.run(
-    edgeDbClient,
-    { ids: [...playersIds] },
-  )
+  // const playersFromDb = await playersSelectFromIds.run(
+  //   edgeDbClient,
+  //   { ids: [...playersIds] },
+  // )
+  const playersFromDb =
+    (await getPlayersFromIds([...playersIds])) ?? []
   // 2.1. Convert it to a hash table
   const playersFromDbHashTable: Record<
     number,
-    PlayerSelect
+    SelectPlayer
   > = {}
   for (const p of playersFromDb) {
     playersFromDbHashTable[p.fox_id] = p
@@ -73,7 +79,7 @@ export async function updatePlayersRanks(
   )
 
   // 4. Go Through Each Game and Update the Players Streak
-  const updatedPlayers: Record<number, PlayerUpsert> = {}
+  const updatedPlayers: Record<number, InsertPlayer> = {}
   for (const g of orderedTopGames) {
     const black = g.black
     const white = g.white
@@ -136,7 +142,7 @@ export async function updatePlayersRanks(
     }
 
     // 4.5. Format the new data
-    const newBlack: PlayerUpsert = {
+    const newBlack: InsertPlayer = {
       fox_id: black.id,
       nick: black.nick,
       name: black.name,
@@ -146,7 +152,7 @@ export async function updatePlayersRanks(
       windowed_wins: blackWins,
       windowed_losses: blackLosses,
     }
-    const newWhite: PlayerUpsert = {
+    const newWhite: InsertPlayer = {
       fox_id: white.id,
       nick: white.nick,
       name: white.name,
@@ -162,9 +168,10 @@ export async function updatePlayersRanks(
   }
 
   // 5. Upsert to DB
-  await playersUpsert.run(edgeDbClient, {
-    players: Object.values(updatedPlayers),
-  })
+  // await playersUpsert.run(edgeDbClient, {
+  //   players: Object.values(updatedPlayers),
+  // })
+  await upsertPlayers(Object.values(updatedPlayers))
 
   return updatedPlayers
 }
