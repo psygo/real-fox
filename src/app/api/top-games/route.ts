@@ -14,6 +14,8 @@ import {
 } from "./fetch_top_games"
 import { updatePlayersRanks } from "./update_players_ranks"
 
+export const dynamic = "force-dynamic"
+
 type GamesTable = Record<string, Fox_Game>
 
 function logGames(

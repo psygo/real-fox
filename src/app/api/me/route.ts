@@ -4,6 +4,8 @@ import { cronAuth } from "../cron_auth"
 
 import { fetchMe } from "../top-games/fetch_me"
 
+export const dynamic = "force-dynamic"
+
 /**
  * Just so we can artificially trigger a login.
  */
