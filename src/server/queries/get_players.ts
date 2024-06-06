@@ -8,7 +8,7 @@ export async function getPlayers() {
       .select()
       .from(players)
       .orderBy(desc(players.rank))
-      .limit(50)
+      .limit(25)
   } catch (e) {
     console.error(e)
   }
