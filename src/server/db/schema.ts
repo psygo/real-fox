@@ -48,7 +48,7 @@ export const players = createTable("players", {
   // Fox Data
   real_name: varchar("real_name", { length: 256 }),
   nick: varchar("nick", { length: 256 }).notNull(),
-  name: varchar("nick", { length: 256 }).notNull(),
+  name: varchar("name", { length: 256 }).notNull(),
   country: varchar("country", { length: 256 }).notNull(),
   ai: boolean("ai").notNull().default(false),
   // Ranking Data

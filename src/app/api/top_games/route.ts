@@ -6,7 +6,6 @@ import "@utils/array"
 
 import { type Fox_Game } from "@types"
 
-import { exampleTopGamesList } from "./example_top_games_list"
 import { fetchMe } from "./fetch_me"
 import {
   fetchTopGames,
@@ -14,17 +13,40 @@ import {
 } from "./fetch_top_games"
 import { updatePlayersRanks } from "./update_players_ranks"
 
+type GamesHashTable = Record<string, Fox_Game[]>
+
+function gamesHashTableToArray(table: GamesHashTable) {
+  const values = Object.values(table)
+  return values.flat()
+}
+
+function gamesHashTableLength(table: GamesHashTable) {
+  return gamesHashTableToArray(table).length
+}
+
 export async function POST() {
   try {
     // 1. Trigger a login on the API
     await fetchMe()
 
-    // 2. Get the Top Games
-    let allGames: Fox_Game[] = []
+    // 2. Get All the Top Games
+    //    We need a hash table because the the timeout below
+    //    might create concurrent requests, which might then
+    //    create game copies.
+    const allGamesHashTable: Record<string, Fox_Game[]> = {}
     let lastGameId: number | bigint = 0
     const pageSize = maxPageSize
+
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
     const topGamesIntervalId = setInterval(async () => {
+      console.log("---------------------------------------")
+      console.log("lastGameId", lastGameId)
+      console.log(
+        "games length",
+        gamesHashTableLength(allGamesHashTable),
+      )
+      console.log("---------------------------------------")
+
       const res = await fetchTopGames(lastGameId, pageSize)
 
       if (!res) {
@@ -34,18 +56,28 @@ export async function POST() {
 
       const { games, nextLastGameId } = res
 
-      if (games.length === 0 || allGames.length >= 7_000) {
+      if (
+        Object.keys(allGamesHashTable).includes(
+          nextLastGameId.toString(),
+        )
+      )
+        return
+
+      if (
+        games.length === 0 ||
+        gamesHashTableLength(allGamesHashTable) >= 5_000 // Around the max of daily games
+      ) {
         // 3. Update Ranks based on Each Game
-        await updatePlayersRanks(allGames)
+        await updatePlayersRanks(
+          gamesHashTableToArray(allGamesHashTable),
+        )
         clearInterval(topGamesIntervalId)
         return
       }
 
       lastGameId = nextLastGameId
-      allGames = allGames.concat(games)
-
-      console.log("top games length", allGames.length)
-    }, 2_000)
+      allGamesHashTable[lastGameId.toString()] = games
+    }, 3_000)
 
     return NextResponse.json({}, { status: 201 })
   } catch (e) {
