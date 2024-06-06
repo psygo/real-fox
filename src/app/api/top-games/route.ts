@@ -31,7 +31,7 @@ function logGames(
 
 export async function POST(req: NextRequest) {
   try {
-    if (cronAuth(req))
+    if (!cronAuth(req))
       return NextResponse.json({}, { status: 401 })
 
     // 1. Get All the Top Games

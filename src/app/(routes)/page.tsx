@@ -18,7 +18,7 @@ export default async function HomePage() {
 
   return (
     <div className="flex flex-col items-center gap-2">
-      {/* <FetchButton
+      <FetchButton
         apiPath="/me"
         method="GET"
         text="Fetch Me"
@@ -27,7 +27,7 @@ export default async function HomePage() {
         apiPath="/top-games"
         method="POST"
         text="Fetch and Update DB"
-      /> */}
+      />
       <h2 className="text-gray-400">Fox Top 25 Players</h2>
       <PlayersList players={players} />
     </div>

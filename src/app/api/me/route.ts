@@ -9,7 +9,7 @@ import { fetchMe } from "../top-games/fetch_me"
  */
 export async function GET(req: NextRequest) {
   try {
-    if (cronAuth(req))
+    if (!cronAuth(req))
       return NextResponse.json({}, { status: 401 })
 
     const me = await fetchMe()
