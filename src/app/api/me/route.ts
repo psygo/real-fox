@@ -11,13 +11,7 @@ export const dynamic = "force-dynamic"
  */
 export async function GET(req: NextRequest) {
   try {
-    if (
-      !(
-        process.env.NODE_ENV === "development" ||
-        req.headers.get("Authorization") ===
-          `Bearer ${process.env.CRON_SECRET}`
-      )
-    )
+    if (!cronAuth(req))
       return NextResponse.json({}, { status: 401 })
 
     const me = await fetchMe()
