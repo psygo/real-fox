@@ -13,7 +13,7 @@ export default async function HomePage() {
 
   // console.log("updated players", updatedPlayers)
 
-  const players = await getPlayers()
+  const players = (await getPlayers()) ?? []
 
   return (
     <div className="flex flex-col items-center gap-2">
