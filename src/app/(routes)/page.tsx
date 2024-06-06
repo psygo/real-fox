@@ -17,8 +17,8 @@ export default async function HomePage() {
 
   return (
     <div className="flex flex-col items-center gap-2">
-      <FetchButton />
-      <h2 className="text-gray-400">Fox Top Players</h2>
+      {/* <FetchButton /> */}
+      {/* <h2 className="text-gray-400">Fox Top Players</h2> */}
       <PlayersList players={players} />
     </div>
   )
