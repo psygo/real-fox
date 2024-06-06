@@ -1,5 +1,10 @@
 import e from "@schema"
 
+import { type InsertPlayer } from "@types"
+
+import { db, players } from "@db"
+import { sql } from "drizzle-orm"
+
 export const playersUpsert = e.params(
   {
     players: e.array(
@@ -49,3 +54,27 @@ export const playersUpsert = e.params(
     )
   },
 )
+
+export async function upsertPlayers(
+  newPlayers: InsertPlayer[],
+) {
+  try {
+    await db
+      .insert(players)
+      .values(newPlayers)
+      .onConflictDoUpdate({
+        target: players.fox_id,
+        set: {
+          nick: sql`excluded.nick`,
+          name: sql`excluded.name`,
+          ai: sql`excluded.ai`,
+          country: sql`excluded.country`,
+          windowed_wins: sql`excluded.windowed_wins`,
+          windowed_losses: sql`excluded.windowed_losses`,
+          updatedAt: new Date(),
+        },
+      })
+  } catch (e) {
+    console.error(e)
+  }
+}

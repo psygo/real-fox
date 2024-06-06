@@ -9,6 +9,7 @@ import {
   timestamp,
   varchar,
 } from "drizzle-orm/pg-core"
+import { bigint } from "drizzle-orm/mysql-core"
 
 export const createTable = pgTableCreator(
   (name) => `real_fox_${name}`,
@@ -42,6 +43,7 @@ function dateTimeCols() {
 export const players = createTable("players", {
   // IDs
   ...idCols(),
+  fox_id: integer("fox_id").unique().notNull(),
   // DB Metadata
   ...dateTimeCols(),
   // Fox Data

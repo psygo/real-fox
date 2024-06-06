@@ -3,6 +3,13 @@ import { type $infer } from "@schema"
 // eslint-disable-next-line @typescript-eslint/consistent-type-imports
 import { playersSelect } from "@queries"
 
+import {
+  type InferInsertModel,
+  type InferSelectModel,
+} from "drizzle-orm"
+// eslint-disable-next-line @typescript-eslint/consistent-type-imports
+import { players } from "@db"
+
 export type PlayersSelect = $infer<typeof playersSelect>
 
 export type PlayerSelect = PlayersSelect[0]
@@ -40,3 +47,6 @@ export type Fox_PlayerInfo = {
     accepting_games: boolean
   }
 }
+
+export type SelectPlayer = InferSelectModel<typeof players>
+export type InsertPlayer = InferInsertModel<typeof players>
