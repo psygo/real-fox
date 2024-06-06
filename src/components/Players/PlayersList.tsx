@@ -1,9 +1,9 @@
-import { type PlayersSelect } from "@types"
+import { type SelectPlayer } from "@types"
 
 import { PlayerCard } from "./PlayerCard"
 
 type PlayersListProps = {
-  players: PlayersSelect
+  players: SelectPlayer[]
 }
 
 export function PlayersList({ players }: PlayersListProps) {

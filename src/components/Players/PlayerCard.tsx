@@ -1,9 +1,9 @@
 import Image from "next/image"
 
-import { type PlayerSelect } from "@types"
+import { type SelectPlayer } from "@types"
 
 type PlayerCardProps = {
-  player: PlayerSelect
+  player: SelectPlayer
 }
 
 export function PlayerCard({ player }: PlayerCardProps) {
