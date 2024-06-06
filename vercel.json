@@ -2,11 +2,11 @@
   "crons": [
     {
       "path": "/api/me",
-      "schedule": "0 18 * * *"
+      "schedule": "0 20 * * *"
     },
     {
       "path": "/api/top-games",
-      "schedule": "1 18 * * *"
+      "schedule": "1 20 * * *"
     }
   ]
 }
