@@ -7,7 +7,8 @@ Ranking Fox Weiqi players beyond 9d.
 ## Services and Tech Used
 
 - [Vercel](https://vercel.com) for handling deployment, and cron jobs.
-- [EdgeDB](https://www.edgedb.com/)
+- [Vercel Postgres](https://vercel.com/docs/storage/vercel-postgres) for handling the DB.
+- [Drizzle](https://orm.drizzle.team) for ORM.
 - [Open Fox API](https://github.com/openfoxwq/api)
 
 ## Dev
@@ -18,10 +19,10 @@ This is the shape of the project's environment variables:
 
 ```env
 #-----------------------------------------------------------
-# 1. EdgeDB
+# 1. Drizzle
 
-EDGEDB_INSTANCE=
-EDGEDB_SECRET_KEY=
+POSTGRES_URL=
+NODE_ENV=
 
 #-----------------------------------------------------------
 # 2. Open Fox API
