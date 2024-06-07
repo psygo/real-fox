@@ -6,6 +6,8 @@ import "@utils/array"
 
 import { type Fox_Game } from "@types"
 
+import { getLastUpdateDate } from "@queries"
+
 import { cronAuth } from "../cron_auth"
 
 import {
@@ -35,6 +37,18 @@ export async function POST(req: NextRequest) {
   try {
     if (!cronAuth(req))
       return NextResponse.json({}, { status: 401 })
+
+    // 0. Check if the last updated date is today. If so,
+    //    don't do anything.
+    const lastUpdatedDate = await getLastUpdateDate()
+    const today = new Date()
+    if (
+      lastUpdatedDate?.toDateString() ===
+      today.toDateString()
+    ) {
+      console.log("Repeated Games")
+      return NextResponse.json({}, { status: 402 })
+    }
 
     // 1. Get All the Top Games
     //    We need a hash table because the the timeout below
